@@ -25,7 +25,7 @@ for filename in os.listdir(folder_path):
         )
         uploaded_files.append(f)
         
-        print(f"  └─ uploaded: {filename}")
+        print(f"   uploaded: {filename}")
         time.sleep(2) 
 
 print("\n=== UPLOAD RESULT ===")

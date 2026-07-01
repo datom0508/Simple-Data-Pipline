@@ -35,7 +35,7 @@ if response.status_code == 200:
     articles = response.json().get('articles', [])
     
     for article in articles:
-        title = article.get('name', 'Untitled')
+        title = article.get('title', 'Untitled')
         html_body = article.get('body', '')
         
         if not html_body: continue
