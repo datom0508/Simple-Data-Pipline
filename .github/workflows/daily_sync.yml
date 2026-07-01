@@ -1,0 +1,22 @@
+name: Daily Data Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # run automatically every day
+  workflow_dispatch: # enable manual run for testing
+
+jobs:
+  run-etl-job:
+    runs-on: ubuntu-latest # github linux server
+
+    steps:
+      - name: pull source code to server
+        uses: actions/checkout@v4
+
+      - name: build docker image
+        run: docker build -t sync-app .
+
+      - name: 3. run docker container
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: docker run -e GEMINI_API_KEY="${GEMINI_API_KEY}" sync-app
