@@ -30,7 +30,7 @@
 
 2. Run the container. It will execute the `main.py` script once and exits 0:
    ```bash
-   docker run -e GEMINI_API_KEY="${GEMINI_API_KEY}" sync-app
+   docker run -v "$(pwd):/app" --env-file .env sync-app
 
 ## Daily Job Logs
 The scraping and syncing job runs daily at 00:00 UTC via GitHub Actions.
