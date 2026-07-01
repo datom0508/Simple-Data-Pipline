@@ -5,6 +5,9 @@ on:
     - cron: '0 0 * * *' # run automatically every day
   workflow_dispatch: # enable manual run for testing
 
+permissions:
+  contents: write
+
 jobs:
   run-etl-job:
     runs-on: ubuntu-latest # github linux server
@@ -16,7 +19,18 @@ jobs:
       - name: build docker image
         run: docker build -t sync-app .
 
-      - name: 3. run docker container
+      - name: run docker container
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: docker run -e GEMINI_API_KEY="${GEMINI_API_KEY}" sync-app
+        run: docker run -v "${{ github.workspace }}:/app" -e GEMINI_API_KEY="${GEMINI_API_KEY}" sync-app
+
+      - name: fix file permissions
+        # grant file owner permission to Git to read them
+        run: sudo chown -R $USER:$USER ${{ github.workspace }}
+
+      - name: auto commit state files
+        # get sync_state.json and optisigns_articles folder, commit to github
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "update sync_state.json and new articles"
+          file_pattern: 'sync_state.json optisigns_articles/*'
