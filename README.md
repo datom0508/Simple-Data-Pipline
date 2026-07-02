@@ -1,6 +1,6 @@
 # Simple Data Pipeline
 
-## Architecture & Tools 
+## Architecture & Tools
 
 * **Google AI Studio (Gemini 2.5 Flash):** Chosen as the LLM and Vector Storage solution. The Assistant initialization and contextual querying are handled via code.
 * **GitHub Actions:** Serves as the cloud scheduler for the daily cron job.
