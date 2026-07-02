@@ -2,7 +2,7 @@ name: Daily Data Sync
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # run automatically every day
+    - cron: '0 0 * * *' # run automatically every day
   workflow_dispatch: # enable manual run for testing
 
 permissions:
